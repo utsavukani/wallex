@@ -215,6 +215,24 @@ router.patch('/:id/category', authenticate, async (req, res) => {
   }
 });
 
+// Delete transaction
+router.delete('/:id', authenticate, async (req, res) => {
+  try {
+    const transaction = await Transaction.findOneAndDelete({
+      _id: req.params.id,
+      userId: req.user._id
+    });
+
+    if (!transaction) {
+      return res.status(404).json({ error: 'Transaction not found' });
+    }
+
+    res.json({ message: 'Transaction deleted successfully' });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 // Helper functions
 function parseSmsText(smsText) {
   // Mock SMS parsing - in production, use regex patterns for different banks

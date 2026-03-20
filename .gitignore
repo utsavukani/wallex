@@ -22,4 +22,14 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment secrets - NEVER commit these
 .env
+backend/.env
+
+# Bolt.new IDE artifacts
+.bolt
+
+# Runtime log directories
+logs/
+backend/logs/

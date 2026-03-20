@@ -13,7 +13,6 @@ import { goalRoutes } from './routes/goals.js';
 import { analyticsRoutes } from './routes/analytics.js';
 import { parentRoutes } from './routes/parent.js';
 import { allowanceRoutes } from './routes/allowance.js';
-import { mlRoutes } from './routes/ml.js';
 
 const app = express();
 
@@ -43,7 +42,6 @@ app.use('/api/goals', goalRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/parent', parentRoutes);
 app.use('/api/allowance', allowanceRoutes);
-app.use('/api/ml', mlRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
