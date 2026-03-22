@@ -74,7 +74,7 @@ router.post('/otp', otpLimiter, async (req, res) => {
 router.post('/verify', verifyLimiter, async (req, res) => {
   try {
     const data = verifyOtpSchema.parse(req.body);
-    const { email, otp, name, phone, onboardingData } = data;
+    const { email, otp, name, phone, onboardingData, role, segment } = data;
 
     // Verify OTP
     const storedOtp = otpStore.get(email);
