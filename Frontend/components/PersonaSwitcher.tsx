@@ -15,6 +15,7 @@ const PersonaSwitcher: React.FC<PersonaSwitcherProps> = ({ onClose }) => {
       email: 'aisha@example.com',
       role: 'student' as const,
       segment: 'High Earner',
+      dbSegment: 'high-earner',
       description: 'Part-time job + high allowance',
       icon: Crown,
       color: 'text-purple-600 bg-purple-100'
@@ -24,6 +25,7 @@ const PersonaSwitcher: React.FC<PersonaSwitcherProps> = ({ onClose }) => {
       email: 'rohit@example.com',
       role: 'student' as const,
       segment: 'Mid Earner',
+      dbSegment: 'mid-earner',
       description: 'Part-time job + moderate allowance',
       icon: DollarSign,
       color: 'text-green-600 bg-green-100'
@@ -33,6 +35,7 @@ const PersonaSwitcher: React.FC<PersonaSwitcherProps> = ({ onClose }) => {
       email: 'meera@example.com',
       role: 'student' as const,
       segment: 'Budget Conscious',
+      dbSegment: 'budget-conscious',
       description: 'No job, careful spender',
       icon: PiggyBank,
       color: 'text-blue-600 bg-blue-100'
@@ -42,6 +45,7 @@ const PersonaSwitcher: React.FC<PersonaSwitcherProps> = ({ onClose }) => {
       email: 'kunal@example.com',
       role: 'student' as const,
       segment: 'Low Income',
+      dbSegment: 'low-income',
       description: 'Low allowance, needs micro-savings',
       icon: Heart,
       color: 'text-red-600 bg-red-100'
@@ -87,14 +91,14 @@ const PersonaSwitcher: React.FC<PersonaSwitcherProps> = ({ onClose }) => {
   const handlePersonaLogin = async (persona: typeof personas[0]) => {
     // 1. Force the backend to stage the OTP
     await sendOTP(persona.email, persona.role);
-    
+
     // 2. Perform login and pass user data to create account if missing in live Atlas DB
     const success = await login(persona.email, '123456', {
       name: persona.name,
       role: persona.role,
-      segment: persona.segment,
+      segment: 'dbSegment' in persona ? persona.dbSegment : undefined,
     });
-    
+
     if (success) {
       onClose();
     }
