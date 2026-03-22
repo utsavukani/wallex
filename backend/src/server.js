@@ -16,6 +16,9 @@ import { allowanceRoutes } from './routes/allowance.js';
 
 const app = express();
 
+// Trust Render's reverse proxy for express-rate-limit
+app.set('trust proxy', 1);
+
 // Security middleware
 app.use(helmet());
 app.use(cors({
