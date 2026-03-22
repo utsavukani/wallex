@@ -7,7 +7,7 @@ interface PersonaSwitcherProps {
 }
 
 const PersonaSwitcher: React.FC<PersonaSwitcherProps> = ({ onClose }) => {
-  const { login } = useAuth();
+  const { login, sendOTP } = useAuth();
 
   const personas = [
     {
@@ -85,7 +85,16 @@ const PersonaSwitcher: React.FC<PersonaSwitcherProps> = ({ onClose }) => {
   ];
 
   const handlePersonaLogin = async (persona: typeof personas[0]) => {
-    const success = await login(persona.email, '123456');
+    // 1. Force the backend to stage the OTP
+    await sendOTP(persona.email, persona.role);
+    
+    // 2. Perform login and pass user data to create account if missing in live Atlas DB
+    const success = await login(persona.email, '123456', {
+      name: persona.name,
+      role: persona.role,
+      segment: persona.segment,
+    });
+    
     if (success) {
       onClose();
     }
